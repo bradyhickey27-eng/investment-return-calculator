@@ -1,0 +1,102 @@
+
+# Import the Streamlit library
+import streamlit as st
+
+# Set up the webpage
+st.set_page_config(
+page_title="Investment Return Calculator",
+page_icon="📈"
+)
+
+# Display the app title
+st.title("📈 Investment Return Calculator")
+
+# Explain what the calculator does
+st.write(
+"Calculate the profit or loss and percentage "
+"return on your investment."
+)
+
+st.info(
+"Enter your original investment amount, "
+"current value, and dividends received."
+)
+
+# Create input fields for the user
+initial = st.number_input(
+"Initial Investment ($)",
+min_value=0.0,
+value=1000.0,
+step=100.0
+)
+
+current = st.number_input(
+"Current Investment Value ($)",
+min_value=0.0,
+value=1250.0,
+step=100.0
+)
+
+dividends = st.number_input(
+"Dividends Received ($)",
+min_value=0.0,
+value=50.0,
+step=10.0
+)
+
+# Create a button to calculate returns
+if st.button("Calculate Return"):
+
+# Prevent division by zero
+if initial == 0:
+st.error(
+"Initial investment must be greater than zero."
+)
+
+else:
+# Calculate total profit or loss
+profit = current + dividends - initial
+
+# Calculate percentage return
+return_percent = (profit / initial) * 100
+
+# Display the results
+st.subheader("Your Investment Results")
+
+st.metric(
+"Total Profit / Loss",
+f"${profit:,.2f}"
+)
+
+st.metric(
+"Total Return",
+f"{return_percent:.2f}%"
+)
+
+# Explain the outcome
+if profit > 0:
+st.success("Your investment made a profit!")
+
+elif profit < 0:
+st.warning("Your investment experienced a loss.")
+
+else:
+st.info("Your investment broke even.")
+
+# Explain the formulas used
+st.divider()
+st.subheader("How It Works")
+
+st.write(
+"Profit = Current Value + Dividends "
+"- Initial Investment"
+)
+
+st.write(
+"Return (%) = (Profit / Initial Investment) × 100"
+)
+
+st.caption(
+"This calculator shows simple total return, "
+"not annualized return."
+)
